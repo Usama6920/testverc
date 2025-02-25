@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use League\Csv\Writer;
+use Illuminate\Support\Facades\DB;
+
 use League\Csv\Statement;
 
 class LoginBasic extends Controller
