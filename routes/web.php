@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,14 @@ use App\Http\Controllers\Controller;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/check-db', function () {
+    try {
+        DB::connection()->getPdo();
+        return response()->json(['status' => 'success', 'message' => 'Database is online'], 200);
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'error', 'message' => 'Database is offline', 'error' => $e->getMessage()], 500);
+    }
+});
 $controller_path = 'App\Http\Controllers';
 
 // Main Page Route
