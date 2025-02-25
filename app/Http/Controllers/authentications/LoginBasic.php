@@ -15,9 +15,9 @@ class LoginBasic extends Controller
   {
        try {
         DB::connection()->getPdo();
-        return response()->json(['status' => 'success', 'message' => 'Database is online'], 200);
+      dd("db is connnected");
     } catch (\Exception $e) {
-        return response()->json(['status' => 'error', 'message' => 'Database is offline', 'error' => $e->getMessage()], 500);
+         dd("db is not connnected");
     }
   }
 
