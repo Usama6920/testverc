@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::get('/check-db', function () {
+    try {
+        DB::connection()->getPdo();
+        return response()->json(['status' => 'success', 'message' => 'Database is online'], 200);
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'error', 'message' => 'Database is offline', 'error' => $e->getMessage()], 500);
+    }
+});
 
 Route::post('/usersignup',[Controller::class , 'UserSignUp'] )->name('UserSignUp');
 Route::post('/userlogin',[Controller::class , 'UserLogIn'] )->name('UserLogIn');
