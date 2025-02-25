@@ -11,8 +11,12 @@ class LoginBasic extends Controller
 {
   public function index()
   {
-    $pageConfigs = ['myLayout' => 'blank'];
-    return view('content.authentications.auth-login-basic', ['pageConfigs' => $pageConfigs]);
+       try {
+        DB::connection()->getPdo();
+        return response()->json(['status' => 'success', 'message' => 'Database is online'], 200);
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'error', 'message' => 'Database is offline', 'error' => $e->getMessage()], 500);
+    }
   }
 
   public function downloadcsv( Request $request )
